@@ -1,5 +1,6 @@
 ﻿using NonogramCli.Data;
 using NonogramCli.Models;
+using Spectre.Console;
 
 namespace NonogramCli.Features
 {
@@ -45,37 +46,43 @@ namespace NonogramCli.Features
             Console.WriteLine("Select: Space bar");
             Console.WriteLine();
 
-            for (var x = 0; x < 3; x++)
-            {
-                Console.Write("         ");
-                for (var r = 0; r < GameState.Board.Rows.Count; r++)
-                {
-                    Console.Write($" {GameState.Puzzle.GetYHints(r).ElementAtOrDefault(x)} ");
-                }
-                Console.WriteLine();
-            }
-
-            Console.WriteLine();
+            var table = new Table();
+            table.ShowRowSeparators();
+            table.AddColumn("");
 
             for (var r = 0; r < GameState.Board.Rows.Count; r++)
             {
-                for (var x = 0; x < 3; x++)
-                {
-                    Console.Write($" {GameState.Puzzle.GetXHints(r).ElementAtOrDefault(x)} ");
-                }
+                var hints = GetFormattedHints(GameState.Puzzle.GetYHints, r, "\n");
+                table.AddColumn(hints);
+            }
+
+            for (var r = 0; r < GameState.Board.Rows.Count; r++)
+            {
+                var tableRow = new List<string>();
+
+                var hints = GetFormattedHints(GameState.Puzzle.GetXHints, r, " ");
+                tableRow.Add(hints);
 
                 var row = GameState.Board.Rows[r];
 
                 for (var c = 0; c < row.Cells.Count; c++)
                 {
-                    if (GameState.PlayerXPos == c && GameState.PlayerYPos == r) Console.Write(" P ");
-                    else if (row.Cells[c] == CellStatus.Filled) Console.Write(" ■ ");
-                    else if (row.Cells[c] == CellStatus.RuledOut) Console.Write(" X ");
-                    else Console.Write(" . ");
+                    if (GameState.PlayerXPos == c && GameState.PlayerYPos == r) tableRow.Add("P");
+                    else if (row.Cells[c] == CellStatus.Filled) tableRow.Add("■");
+                    else if (row.Cells[c] == CellStatus.RuledOut) tableRow.Add("X");
+                    else tableRow.Add("");
                 }
 
-                Console.WriteLine();
+                table.AddRow(tableRow.ToArray());
             }
+
+            AnsiConsole.Write(table);
+        }
+
+        private static string GetFormattedHints(Func<int, List<int>> getHints, int i, string seperator)
+        {
+            var hints = getHints(i);
+            return string.Join(seperator, hints.Select(h => h.ToString()).ToArray());
         }
     }
 }

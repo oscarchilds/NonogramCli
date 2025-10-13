@@ -2,6 +2,7 @@
 
 internal class Puzzle
 {
+    public required string Name { get; set; }
     public List<PuzzleRow> Rows { get; set; } = [];
 
     public List<int> GetYHints(int yIndex)

@@ -3,6 +3,7 @@
 internal class Board
 {
     public List<Row> Rows = [];
+    public int Size => Rows.Count;
 
     public bool IsComplete(Puzzle puzzle)
     {

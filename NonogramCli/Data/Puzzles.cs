@@ -6,16 +6,13 @@ internal static class Puzzles
 {
     public static Puzzle PuzzleOne = new()
     {
-        Board = new Board()
-        {
-            Rows =
-            [
-                new Row { Cells = [ true, true, false, false, true ] },
-                new Row { Cells = [ false, false, true, false, false ] },
-                new Row { Cells = [ true, true, true, false, true ] },
-                new Row { Cells = [ true, false, true, false, true ] },
-                new Row { Cells = [ false, true, false, true, true ] },
-            ]
-        }
+        Rows =
+        [
+            new PuzzleRow { Cells = [ true, true, false, false, true ] },
+            new PuzzleRow { Cells = [ true, false, true, false, true ] },
+            new PuzzleRow { Cells = [ true, false, true, true, true ] },
+            new PuzzleRow { Cells = [ true, true, false, false, false ] },
+            new PuzzleRow { Cells = [ true, true, true, true, false ] },
+        ]
     };
 }

@@ -16,24 +16,36 @@ internal class GameState
         PlayerXPos = 0;
         PlayerYPos = 0;
 
-        Board.Rows = [.. puzzle.Board.Rows.Select(x => new Row
+        Board.Rows = [.. puzzle.Rows.Select(x => new Row
         {
-            Cells = [.. x.Cells.Select(x => false)]
+            Cells = [.. x.Cells.Select(x => CellStatus.Empty) ]
         })];
     }
 
-    public void SelectCurrentCell()
+    public void SelectCurrentCell() => SetCellStatus(CellStatus.Filled);
+
+    public void RuleOutCurrentCell() => SetCellStatus(CellStatus.RuledOut);
+
+    private void SetCellStatus(CellStatus newStatus)
     {
         var x = PlayerXPos;
         var y = PlayerYPos;
 
         if (y < 0 || y >= Board.Rows.Count) return;
         if (x < 0 || x >= Board.Rows[y].Cells.Count) return;
-        Board.Rows[y].Cells[x] = !Board.Rows[y].Cells[x];
+
+        if (Board.Rows[y].Cells[x] == newStatus)
+        {
+            Board.Rows[y].Cells[x] = CellStatus.Empty;
+        }
+        else
+        {
+            Board.Rows[y].Cells[x] = newStatus;
+        }
     }
 
     public bool CheckWin()
     {
-        return Board.Equals(Puzzle.Board);
+        return Board.IsComplete(Puzzle);
     }
 }

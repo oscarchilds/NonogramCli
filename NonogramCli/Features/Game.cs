@@ -23,6 +23,7 @@ namespace NonogramCli.Features
                 if (key == ConsoleKey.RightArrow) GameState.PlayerXPos++;
 
                 if (key == ConsoleKey.Spacebar) GameState.SelectCurrentCell();
+                if (key == ConsoleKey.X) GameState.RuleOutCurrentCell();
 
                 if (key == ConsoleKey.Escape)
                 {
@@ -49,7 +50,7 @@ namespace NonogramCli.Features
                 Console.Write("         ");
                 for (var r = 0; r < GameState.Board.Rows.Count; r++)
                 {
-                    Console.Write($" {GameState.Puzzle.Board.GetYHints(r).ElementAtOrDefault(x)} ");
+                    Console.Write($" {GameState.Puzzle.GetYHints(r).ElementAtOrDefault(x)} ");
                 }
                 Console.WriteLine();
             }
@@ -60,7 +61,7 @@ namespace NonogramCli.Features
             {
                 for (var x = 0; x < 3; x++)
                 {
-                    Console.Write($" {GameState.Puzzle.Board.GetXHints(r).ElementAtOrDefault(x)} ");
+                    Console.Write($" {GameState.Puzzle.GetXHints(r).ElementAtOrDefault(x)} ");
                 }
 
                 var row = GameState.Board.Rows[r];
@@ -68,7 +69,8 @@ namespace NonogramCli.Features
                 for (var c = 0; c < row.Cells.Count; c++)
                 {
                     if (GameState.PlayerXPos == c && GameState.PlayerYPos == r) Console.Write(" P ");
-                    else if (row.Cells[c]) Console.Write(" ■ ");
+                    else if (row.Cells[c] == CellStatus.Filled) Console.Write(" ■ ");
+                    else if (row.Cells[c] == CellStatus.RuledOut) Console.Write(" X ");
                     else Console.Write(" . ");
                 }
 

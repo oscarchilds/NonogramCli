@@ -12,30 +12,35 @@ namespace NonogramCli.Features
         {
             Render();
 
-            var win = false;
+            var playing = true;
 
-            while (!win)
+            while (playing)
             {
                 var key = Console.ReadKey(true).Key;
 
-                if (key == ConsoleKey.UpArrow) GameState.PlayerYPos--;
-                if (key == ConsoleKey.DownArrow) GameState.PlayerYPos++;
-                if (key == ConsoleKey.LeftArrow) GameState.PlayerXPos--;
-                if (key == ConsoleKey.RightArrow) GameState.PlayerXPos++;
+                if (key == ConsoleKey.UpArrow || key == ConsoleKey.K) GameState.PlayerYPos = Math.Max(GameState.PlayerYPos - 1, 0);
+                else if (key == ConsoleKey.DownArrow || key == ConsoleKey.J) GameState.PlayerYPos = Math.Min(GameState.PlayerYPos + 1, GameState.Board.Size - 1);
+                else if (key == ConsoleKey.LeftArrow || key == ConsoleKey.H) GameState.PlayerXPos =  Math.Max(GameState.PlayerXPos - 1, 0);
+                else if (key == ConsoleKey.RightArrow || key == ConsoleKey.L) GameState.PlayerXPos = Math.Min(GameState.PlayerXPos + 1, GameState.Board.Size - 1);
 
-                if (key == ConsoleKey.Spacebar) GameState.SelectCurrentCell();
-                if (key == ConsoleKey.X) GameState.RuleOutCurrentCell();
+                else if (key == ConsoleKey.Spacebar) GameState.SelectCurrentCell();
+                else if (key == ConsoleKey.X) GameState.RuleOutCurrentCell();
 
-                if (key == ConsoleKey.Escape)
+                else if (key == ConsoleKey.Escape || key == ConsoleKey.Q)
                 {
-                    break;
+                    playing = false;
                 }
 
                 Render();
-                win = GameState.CheckWin();
+
+                if (GameState.CheckWin())
+                {
+                    Console.WriteLine("Win! Press any key to continue");
+                    Console.ReadKey();
+                    playing = false;
+                }
             }
 
-            Console.WriteLine("Win!");
         }
 
         private void Render()
@@ -44,6 +49,7 @@ namespace NonogramCli.Features
 
             Console.WriteLine("Move: Arrow keys");
             Console.WriteLine("Select: Space bar");
+            Console.WriteLine("Quit: Q");
             Console.WriteLine();
 
             var table = new Table();

@@ -1,6 +1,4 @@
-﻿using NonogramCli.Models;
-
-namespace NonogramCli.Data;
+﻿namespace NonogramCli.Models;
 
 internal class GameState
 {

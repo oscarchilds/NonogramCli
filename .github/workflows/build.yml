@@ -5,26 +5,29 @@ name: Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - uses: actions/setup-dotnet@v5
-      with:
-        dotnet-version: '10.x.x'
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "10.x.x"
 
-    - name: dotnet - restore
-      run: dotnet restore
-  
-    - name: dotnet - build
-      run: dotnet build --no-restore
+      - name: dotnet - restore
+        run: dotnet restore
+
+      - name: dotnet - format
+        run: dotnet format --verify-no-changes
+
+      - name: dotnet - build
+        run: dotnet build --no-restore
 
     # - name: dotnet - test
     #   run: dotnet test --no-build --verbosity normal

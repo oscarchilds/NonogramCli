@@ -32,7 +32,7 @@ namespace NonogramCli.Features
 
                         if (key == ConsoleKey.UpArrow || key == ConsoleKey.K) GameState.PlayerYPos = Math.Max(GameState.PlayerYPos - 1, 0);
                         else if (key == ConsoleKey.DownArrow || key == ConsoleKey.J) GameState.PlayerYPos = Math.Min(GameState.PlayerYPos + 1, GameState.Board.Size - 1);
-                        else if (key == ConsoleKey.LeftArrow || key == ConsoleKey.H) GameState.PlayerXPos =  Math.Max(GameState.PlayerXPos - 1, 0);
+                        else if (key == ConsoleKey.LeftArrow || key == ConsoleKey.H) GameState.PlayerXPos = Math.Max(GameState.PlayerXPos - 1, 0);
                         else if (key == ConsoleKey.RightArrow || key == ConsoleKey.L) GameState.PlayerXPos = Math.Min(GameState.PlayerXPos + 1, GameState.Board.Size - 1);
 
                         else if (key == ConsoleKey.Spacebar) GameState.SelectCurrentCell();
@@ -78,7 +78,7 @@ namespace NonogramCli.Features
 
                 var row = GameState.Board.Rows[r];
 
-                foreach (var cell in row.Cells) 
+                foreach (var cell in row.Cells)
                 {
                     tableRow.Add("");
                 }

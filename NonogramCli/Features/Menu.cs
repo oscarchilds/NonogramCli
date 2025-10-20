@@ -12,7 +12,7 @@ internal class Menu
 
         var playing = true;
 
-        while(playing)
+        while (playing)
         {
             Console.Clear();
 

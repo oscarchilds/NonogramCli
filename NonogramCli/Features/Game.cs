@@ -10,48 +10,55 @@ namespace NonogramCli.Features
 
         public void Start()
         {
-            Render();
-
-            var playing = true;
-
-            while (playing)
-            {
-                var key = Console.ReadKey(true).Key;
-
-                if (key == ConsoleKey.UpArrow || key == ConsoleKey.K) GameState.PlayerYPos = Math.Max(GameState.PlayerYPos - 1, 0);
-                else if (key == ConsoleKey.DownArrow || key == ConsoleKey.J) GameState.PlayerYPos = Math.Min(GameState.PlayerYPos + 1, GameState.Board.Size - 1);
-                else if (key == ConsoleKey.LeftArrow || key == ConsoleKey.H) GameState.PlayerXPos =  Math.Max(GameState.PlayerXPos - 1, 0);
-                else if (key == ConsoleKey.RightArrow || key == ConsoleKey.L) GameState.PlayerXPos = Math.Min(GameState.PlayerXPos + 1, GameState.Board.Size - 1);
-
-                else if (key == ConsoleKey.Spacebar) GameState.SelectCurrentCell();
-                else if (key == ConsoleKey.X) GameState.RuleOutCurrentCell();
-
-                else if (key == ConsoleKey.Escape || key == ConsoleKey.Q)
-                {
-                    playing = false;
-                }
-
-                Render();
-
-                if (GameState.CheckWin())
-                {
-                    Console.WriteLine("Win! Press any key to continue");
-                    Console.ReadKey();
-                    playing = false;
-                }
-            }
-
-        }
-
-        private void Render()
-        {
             Console.Clear();
 
             Console.WriteLine("Move: Arrow keys");
             Console.WriteLine("Select: Space bar");
+            Console.WriteLine("Rule out a cell: X");
             Console.WriteLine("Quit: Q");
             Console.WriteLine();
 
+            var table = CreateTable();
+
+            AnsiConsole.Live(table)
+                .Start(ctx =>
+                {
+                    var playing = true;
+                    ctx.Refresh();
+
+                    while (playing)
+                    {
+                        var key = Console.ReadKey(true).Key;
+
+                        if (key == ConsoleKey.UpArrow || key == ConsoleKey.K) GameState.PlayerYPos = Math.Max(GameState.PlayerYPos - 1, 0);
+                        else if (key == ConsoleKey.DownArrow || key == ConsoleKey.J) GameState.PlayerYPos = Math.Min(GameState.PlayerYPos + 1, GameState.Board.Size - 1);
+                        else if (key == ConsoleKey.LeftArrow || key == ConsoleKey.H) GameState.PlayerXPos =  Math.Max(GameState.PlayerXPos - 1, 0);
+                        else if (key == ConsoleKey.RightArrow || key == ConsoleKey.L) GameState.PlayerXPos = Math.Min(GameState.PlayerXPos + 1, GameState.Board.Size - 1);
+
+                        else if (key == ConsoleKey.Spacebar) GameState.SelectCurrentCell();
+                        else if (key == ConsoleKey.X) GameState.RuleOutCurrentCell();
+
+                        else if (key == ConsoleKey.Escape || key == ConsoleKey.Q)
+                        {
+                            playing = false;
+                        }
+
+                        UpdateTable(table);
+                        ctx.Refresh();
+
+                        if (GameState.CheckWin())
+                        {
+                            Console.WriteLine("");
+                            Console.WriteLine("Win! Press any key to continue");
+                            Console.ReadKey();
+                            playing = false;
+                        }
+                    }
+                });
+        }
+
+        private Table CreateTable()
+        {
             var table = new Table();
             table.ShowRowSeparators();
             table.AddColumn("");
@@ -71,24 +78,40 @@ namespace NonogramCli.Features
 
                 var row = GameState.Board.Rows[r];
 
-                for (var c = 0; c < row.Cells.Count; c++)
+                foreach (var cell in row.Cells) 
                 {
-                    if (GameState.PlayerXPos == c && GameState.PlayerYPos == r) tableRow.Add("P");
-                    else if (row.Cells[c] == CellStatus.Filled) tableRow.Add("■");
-                    else if (row.Cells[c] == CellStatus.RuledOut) tableRow.Add("X");
-                    else tableRow.Add("");
+                    tableRow.Add("");
                 }
 
                 table.AddRow(tableRow.ToArray());
             }
 
-            AnsiConsole.Write(table);
+            UpdateTable(table);
+            return table;
         }
 
         private static string GetFormattedHints(Func<int, List<int>> getHints, int i, string seperator)
         {
             var hints = getHints(i);
             return string.Join(seperator, hints.Select(h => h.ToString()).ToArray());
+        }
+
+        private void UpdateTable(Table table)
+        {
+            for (var y = 0; y < GameState.Board.Rows.Count; y++)
+            {
+                var row = GameState.Board.Rows[y];
+                for (var x = 0; x < row.Cells.Count; x++)
+                {
+                    var newValue = "";
+
+                    if (GameState.PlayerXPos == x && GameState.PlayerYPos == y) newValue = "P";
+                    else if (row.Cells[x] == CellStatus.Filled) newValue = "■";
+                    else if (row.Cells[x] == CellStatus.RuledOut) newValue = "X";
+
+                    table.UpdateCell(y, x + 1, newValue);
+                }
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ internal class Menu
             Console.Clear();
 
             var menuPrompt = new SelectionPrompt<(MenuOptions Value, string Label)>()
-                .Title("Select a puzzle to play:")
+                .Title("Nonogram CLI")
                 .AddChoices(
                 [
                     (MenuOptions.Play, "Play a puzzle"),

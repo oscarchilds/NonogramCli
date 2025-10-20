@@ -6,7 +6,7 @@ namespace NonogramCli.Features;
 
 internal class Menu
 {
-    public static void Start()
+    internal static void Start()
     {
         Console.Clear();
 
@@ -64,10 +64,11 @@ internal class Menu
         var game = new Game(puzzle);
         game.Start();
     }
+
+    private enum MenuOptions
+    {
+        Play,
+        Quit
+    }
 }
 
-public enum MenuOptions
-{
-    Play,
-    Quit
-}

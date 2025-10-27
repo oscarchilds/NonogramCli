@@ -2,6 +2,7 @@
 
 internal class Puzzle
 {
+    public required Guid Id { get; set; }
     public required string Name { get; set; }
     public List<PuzzleRow> Rows { get; set; } = [];
 

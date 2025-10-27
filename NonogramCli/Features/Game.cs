@@ -1,5 +1,4 @@
-﻿using NonogramCli.Data;
-using NonogramCli.Models;
+﻿using NonogramCli.Models;
 using Spectre.Console;
 
 namespace NonogramCli.Features;

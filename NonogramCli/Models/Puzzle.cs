@@ -5,18 +5,18 @@ internal class Puzzle
     public required Guid Id { get; set; }
     public required int IncrementalId { get; set; }
     public required string Name { get; set; }
-    public List<PuzzleRow> Rows { get; set; } = [];
+    public List<List<bool>> Rows { get; set; } = [];
 
     public List<int> GetYHints(int yIndex)
     {
-        var column = Rows.Select(r => r.Cells[yIndex]).ToList();
+        var column = Rows.Select(r => r[yIndex]).ToList();
         return GetHints(column);
     }
 
     public List<int> GetXHints(int xIndex)
     {
         var row = Rows[xIndex];
-        return GetHints(row.Cells);
+        return GetHints(row);
     }
 
     private static List<int> GetHints(List<bool> cells)
@@ -38,9 +38,4 @@ internal class Puzzle
 
         return result;
     }
-}
-
-internal class PuzzleRow
-{
-    public List<bool> Cells { get; set; } = [];
 }

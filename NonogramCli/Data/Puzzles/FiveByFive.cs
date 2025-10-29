@@ -4,7 +4,8 @@ namespace NonogramCli.Data.Puzzles;
 
 internal static class FiveByFive
 {
-    public static List<Puzzle> Puzzles = [
+    public static List<Puzzle> Puzzles =
+    [
         new()
         {
             Id = new Guid("9b01dfef-69f8-4692-b539-c295b7370e42"),
@@ -12,11 +13,11 @@ internal static class FiveByFive
             Name = "Cup",
             Rows =
             [
-                new PuzzleRow { Cells = [ false, true, false, true, true ] },
-                new PuzzleRow { Cells = [ false, true, true, true, true ] },
-                new PuzzleRow { Cells = [ false, true, true, true, true ] },
-                new PuzzleRow { Cells = [ false, false, true, false, false ] },
-                new PuzzleRow { Cells = [ false, true, true, true, false ] },
+                [ false, true, false, true, true ],
+                [ false, true, true, true, true ],
+                [ false, true, true, true, true ],
+                [ false, false, true, false, false ],
+                [ false, true, true, true, false ],
             ]
         },
         new()
@@ -26,11 +27,11 @@ internal static class FiveByFive
             Name = "Heart",
             Rows =
             [
-                new PuzzleRow { Cells = [ false, true, false, true, false ] },
-                new PuzzleRow { Cells = [ true, true, true, true, true ] },
-                new PuzzleRow { Cells = [ true, true, true, true, true ] },
-                new PuzzleRow { Cells = [ false, true, true, true, false ] },
-                new PuzzleRow { Cells = [ false, false, true, false, false ] },
+                [ false, true, false, true, false ],
+                [ true, true, true, true, true ],
+                [ true, true, true, true, true ],
+                [ false, true, true, true, false ],
+                [ false, false, true, false, false ],
             ]
         },
         new()
@@ -40,11 +41,11 @@ internal static class FiveByFive
             Name = "Rocket",
             Rows =
             [
-                new PuzzleRow { Cells = [ false, false, true, false, false ] },
-                new PuzzleRow { Cells = [ false, true, true, true, false ] },
-                new PuzzleRow { Cells = [ false, true, false, true, false ] },
-                new PuzzleRow { Cells = [ true, true, true, true, true ] },
-                new PuzzleRow { Cells = [ true, false, true, false, true ] },
+                [ false, false, true, false, false ],
+                [ false, true, true, true, false ],
+                [ false, true, false, true, false ],
+                [ true, true, true, true, true ],
+                [ true, false, true, false, true ],
             ]
         },
         new()
@@ -54,11 +55,11 @@ internal static class FiveByFive
             Name = "Tree",
             Rows =
             [
-                new PuzzleRow { Cells = [ false, false, false, true, false ] },
-                new PuzzleRow { Cells = [ false, false, true, true, true ] },
-                new PuzzleRow { Cells = [ false, false, false, true, false ] },
-                new PuzzleRow { Cells = [ false, true, false, true, false ] },
-                new PuzzleRow { Cells = [ true, true, true, true, true ] },
+                [ false, false, false, true, false ],
+                [ false, false, true, true, true ],
+                [ false, false, false, true, false ],
+                [ false, true, false, true, false ],
+                [ true, true, true, true, true ],
             ]
         },
         new()
@@ -68,11 +69,11 @@ internal static class FiveByFive
             Name = "Dog",
             Rows =
             [
-                new PuzzleRow { Cells = [ true, false, true, false, false ] },
-                new PuzzleRow { Cells = [ true, true, true, false, true ] },
-                new PuzzleRow { Cells = [ true, true, true, true, true ] },
-                new PuzzleRow { Cells = [ true, true, true, true, true ] },
-                new PuzzleRow { Cells = [ true, false, true, false, true ] },
+                [ true, false, true, false, false ],
+                [ true, true, true, false, true ],
+                [ true, true, true, true, true ],
+                [ true, true, true, true, true ],
+                [ true, false, true, false, true ],
             ]
         }
     ];

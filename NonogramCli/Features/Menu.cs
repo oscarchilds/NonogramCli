@@ -32,7 +32,7 @@ internal class Menu
             switch (action.Item1)
             {
                 case MenuOptions.Play:
-                    PlayPuzzle();
+                    ChooseSize();
                     break;
                 case MenuOptions.Quit:
                     playing = false;
@@ -43,13 +43,30 @@ internal class Menu
         Console.WriteLine("Thanks for playing!");
     }
 
-    private static void PlayPuzzle()
+    private static void ChooseSize()
+    {
+        Console.Clear();
+
+        var puzzlePrompt = new SelectionPrompt<(List<Puzzle> Value, string Label)>()
+            .Title("Catagory")
+            .AddChoices([
+                (FiveByFive.Puzzles, "5x5"),
+                (TenByTen.Puzzles, "10x10")
+            ]);
+
+        puzzlePrompt.Converter = new Func<(List<Puzzle> Value, string Label), string>(x => x.Label);
+
+        var result = AnsiConsole.Prompt(puzzlePrompt);
+        ChoosePuzzle(result.Item1);
+    }
+
+    private static void ChoosePuzzle(List<Puzzle> puzzles)
     {
         Console.Clear();
 
         var puzzlePrompt = new SelectionPrompt<Puzzle>()
-            .Title("Select a puzzle to play:")
-            .AddChoices(FiveByFive.Puzzles);
+            .Title("Select a puzzle to play")
+            .AddChoices(puzzles);
 
         puzzlePrompt.Converter = new Func<Puzzle, string>(x => x.IncrementalId.ToString());
 

@@ -1,3 +1,3 @@
 ﻿using NonogramCli.Features;
 
-Menu.Start();
+MainMenu.Start();

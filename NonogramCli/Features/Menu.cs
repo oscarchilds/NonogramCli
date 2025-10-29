@@ -1,4 +1,5 @@
 ﻿using NonogramCli.Data;
+using NonogramCli.Data.Puzzles;
 using NonogramCli.Models;
 using Spectre.Console;
 
@@ -20,7 +21,7 @@ internal class Menu
                 .Title("Nonogram CLI")
                 .AddChoices(
                 [
-                    (MenuOptions.Play, "Play a puzzle"),
+                    (MenuOptions.Play, "Play"),
                     (MenuOptions.Quit, "Quit"),
                 ]);
 
@@ -48,16 +49,9 @@ internal class Menu
 
         var puzzlePrompt = new SelectionPrompt<Puzzle>()
             .Title("Select a puzzle to play:")
-            .AddChoices(
-            [
-                Puzzles.PuzzleOne,
-                Puzzles.PuzzleTwo,
-                Puzzles.PuzzleThree,
-                Puzzles.PuzzleFour,
-                Puzzles.PuzzleFive,
-            ]);
+            .AddChoices(FiveByFive.Puzzles);
 
-        puzzlePrompt.Converter = new Func<Puzzle, string>(x => x.Name);
+        puzzlePrompt.Converter = new Func<Puzzle, string>(x => x.IncrementalId.ToString());
 
         var puzzle = AnsiConsole.Prompt(puzzlePrompt);
 

@@ -16,7 +16,7 @@ internal class GameState
 
         Board.Rows = [.. puzzle.Rows.Select(x => new Row
         {
-            Cells = [.. x.Cells.Select(x => CellStatus.Empty) ]
+            Cells = [.. x.Select(x => CellStatus.Empty) ]
         })];
     }
 

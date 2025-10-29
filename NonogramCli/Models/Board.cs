@@ -15,12 +15,14 @@ internal class Board
             var rowA = Rows[i];
             var rowB = puzzle.Rows[i];
 
-            if (rowA.Cells.Count != rowB.Cells.Count)
+            if (rowA.Cells.Count != rowB.Count)
                 return false;
 
             for (int j = 0; j < rowA.Cells.Count; j++)
             {
-                if ((rowA.Cells[j] == CellStatus.Filled) != rowB.Cells[j])
+                var cellIsFilled = rowA.Cells[j] == CellStatus.Filled;
+
+                if (cellIsFilled != rowB[j])
                     return false;
             }
         }

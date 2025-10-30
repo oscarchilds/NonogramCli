@@ -35,6 +35,7 @@ internal class Puzzle
         }
 
         if (currentCount > 0) result.Add(currentCount);
+        if (result.Count == 0) result.Add(0);
 
         return result;
     }

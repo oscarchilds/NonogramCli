@@ -5,7 +5,6 @@ internal class GameState
     public int PlayerXPos;
     public int PlayerYPos;
     public Board Board = new();
-    public List<Row> Rows = [];
     public Puzzle Puzzle;
 
     public GameState(Puzzle puzzle)
@@ -14,10 +13,7 @@ internal class GameState
         PlayerXPos = 0;
         PlayerYPos = 0;
 
-        Board.Rows = [.. puzzle.Rows.Select(x => new Row
-        {
-            Cells = [.. x.Select(x => CellStatus.Empty) ]
-        })];
+        SetupBoard();
     }
 
     public void SelectCurrentCell() => SetCellStatus(CellStatus.Filled);
@@ -30,16 +26,21 @@ internal class GameState
         var y = PlayerYPos;
 
         if (y < 0 || y >= Board.Rows.Count) return;
-        if (x < 0 || x >= Board.Rows[y].Cells.Count) return;
+        if (x < 0 || x >= Board.Rows[y].Count) return;
 
-        if (Board.Rows[y].Cells[x] == newStatus)
+        if (Board.Rows[y][x] == newStatus)
         {
-            Board.Rows[y].Cells[x] = CellStatus.Empty;
+            Board.Rows[y][x] = CellStatus.Empty;
         }
         else
         {
-            Board.Rows[y].Cells[x] = newStatus;
+            Board.Rows[y][x] = newStatus;
         }
+    }
+
+    private void SetupBoard()
+    {
+        Board.Rows = Puzzle.Rows.Select(x => x.Select(y => CellStatus.Empty).ToList()).ToList();
     }
 
     public bool CheckWin()

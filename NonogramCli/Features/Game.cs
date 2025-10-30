@@ -77,7 +77,7 @@ internal class Game(Puzzle puzzle)
 
             var row = GameState.Board.Rows[r];
 
-            foreach (var cell in row.Cells)
+            foreach (var cell in row)
             {
                 tableRow.Add("");
             }
@@ -100,13 +100,13 @@ internal class Game(Puzzle puzzle)
         for (var y = 0; y < GameState.Board.Rows.Count; y++)
         {
             var row = GameState.Board.Rows[y];
-            for (var x = 0; x < row.Cells.Count; x++)
+            for (var x = 0; x < row.Count; x++)
             {
                 var newValue = "";
 
                 if (GameState.PlayerXPos == x && GameState.PlayerYPos == y) newValue = "P";
-                else if (row.Cells[x] == CellStatus.Filled) newValue = "■";
-                else if (row.Cells[x] == CellStatus.RuledOut) newValue = "X";
+                else if (row[x] == CellStatus.Filled) newValue = "■";
+                else if (row[x] == CellStatus.RuledOut) newValue = "X";
 
                 table.UpdateCell(y, x + 1, newValue);
             }

@@ -2,7 +2,7 @@
 
 internal class Board
 {
-    public List<Row> Rows = [];
+    public List<List<CellStatus>> Rows = [];
     public int Size => Rows.Count;
 
     public bool IsComplete(Puzzle puzzle)
@@ -15,12 +15,12 @@ internal class Board
             var rowA = Rows[i];
             var rowB = puzzle.Rows[i];
 
-            if (rowA.Cells.Count != rowB.Count)
+            if (rowA.Count != rowB.Count)
                 return false;
 
-            for (int j = 0; j < rowA.Cells.Count; j++)
+            for (int j = 0; j < rowA.Count; j++)
             {
-                var cellIsFilled = rowA.Cells[j] == CellStatus.Filled;
+                var cellIsFilled = rowA[j] == CellStatus.Filled;
 
                 if (cellIsFilled != rowB[j])
                     return false;
@@ -29,9 +29,4 @@ internal class Board
 
         return true;
     }
-}
-
-internal class Row
-{
-    public List<CellStatus> Cells = [];
 }
